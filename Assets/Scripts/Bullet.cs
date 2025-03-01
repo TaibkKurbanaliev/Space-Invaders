@@ -21,4 +21,9 @@ public class Bullet : MonoBehaviour
     {
         _rb.MovePosition(transform.position + Vector3.up * _speed * Time.fixedDeltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+    }
 }
