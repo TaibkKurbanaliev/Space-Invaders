@@ -5,14 +5,23 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private int _killPoints = 100;
+    [SerializeField] private float _stepDownOffset = 1f;
+    [SerializeField] private LayerMask _wallMask;
+
+    public static event Action<int> Died;
 
     private static event Action _edgeReached;
-    private Vector2 direction = Vector2.right;
+    private Vector2 _directionX = Vector2.right;
     private Rigidbody2D _rb;
+
+    private bool _isReached = false;
+    private float _currentPosY;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _currentPosY = transform.position.y;
     }
 
     private void OnEnable()
@@ -25,18 +34,40 @@ public class Enemy : MonoBehaviour
         _edgeReached -= OnEdgeReached;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        Move();
+        Died?.Invoke(_killPoints);
     }
 
+    private void Update()
+    {
+        if (_isReached)
+        {
+            if (transform.position.y > _currentPosY - _stepDownOffset)
+            { 
+                Move(Vector2.down); 
+            }
+            else
+            {
+                _currentPosY = transform.position.y;
+                _isReached = false;
+            }
+        }
+        else
+        {
+            Move(_directionX);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _edgeReached?.Invoke();
+        if ((1 << collision.gameObject.layer & _wallMask) != 0)
+        {
+            _edgeReached?.Invoke();
+        }
     }
 
-    public void Move()
+    public void Move(Vector2 direction)
     {
         Vector2 position = transform.position;
         _rb.MovePosition(position + direction * _speed * Time.fixedDeltaTime);
@@ -44,7 +75,8 @@ public class Enemy : MonoBehaviour
 
     private void OnEdgeReached()
     {
-        direction *= -1;
+        _isReached = true;
+        _directionX *= -1;
     }
 
 }
