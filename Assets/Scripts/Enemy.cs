@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _stepDownOffset = 1f;
     [SerializeField] private LayerMask _wallMask;
 
-    public static event Action<int> Died;
+    public static event Action<int, Vector3> Died;
 
     private static event Action _edgeReached;
     private Vector2 _directionX = Vector2.right;
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        Died?.Invoke(_killPoints);
+        Died?.Invoke(_killPoints, transform.position);
     }
 
     private void Update()
