@@ -4,6 +4,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private LayerMask _target;
 
     private Rigidbody2D _rb;
 
@@ -19,14 +20,14 @@ public class Bullet : MonoBehaviour
 
     private void Move()
     {
-        _rb.MovePosition(transform.position + Vector3.up * _speed * Time.fixedDeltaTime);
+        _rb.MovePosition(transform.position + transform.up * _speed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
         
-        if (collision.TryGetComponent(out Enemy _))
+        if ((1 << collision.gameObject.layer & _target) != 0)
         {
             Destroy(collision.gameObject);
         }
