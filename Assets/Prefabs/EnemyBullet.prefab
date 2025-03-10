@@ -133,6 +133,9 @@ MonoBehaviour:
   _target:
     serializedVersion: 2
     m_Bits: 512
+  _destroyer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!58 &3165802491309010030
 CircleCollider2D:
   m_ObjectHideFlags: 0

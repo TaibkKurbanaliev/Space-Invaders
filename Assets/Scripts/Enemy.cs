@@ -2,17 +2,18 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamagable
 {
     [SerializeField] private float _speed;
     [SerializeField] private int _killPoints = 100;
     [SerializeField] private float _stepDownOffset = 1f;
-    [SerializeField] private LayerMask _wallMask;
+    [SerializeField] private LayerMask _leftWall;
+    [SerializeField] private LayerMask _rightWall;
 
     public static event Action<int, Vector3> Died;
 
-    private static event Action _edgeReached;
-    private Vector2 _directionX = Vector2.right;
+    private static event Action<Vector2> _edgeReached;
+    private Vector2 _directionX;
     private Rigidbody2D _rb;
 
     private bool _isReached = false;
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _currentPosY = transform.position.y;
+        _directionX = transform.right;
     }
 
     private void OnEnable()
@@ -32,11 +34,6 @@ public class Enemy : MonoBehaviour
     private void OnDisable()
     {
         _edgeReached -= OnEdgeReached;
-    }
-
-    private void OnDestroy()
-    {
-        Died?.Invoke(_killPoints, transform.position);
     }
 
     private void Update()
@@ -61,9 +58,13 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((1 << collision.gameObject.layer & _wallMask) != 0)
+        if ((1 << collision.gameObject.layer & _leftWall) != 0)
         {
-            _edgeReached?.Invoke();
+            _edgeReached?.Invoke(transform.right);
+        }
+        else if ((1 << collision.gameObject.layer & _rightWall) != 0)
+        {
+            _edgeReached?.Invoke(-transform.right);
         }
     }
 
@@ -73,10 +74,15 @@ public class Enemy : MonoBehaviour
         _rb.MovePosition(position + direction * _speed * Time.fixedDeltaTime);
     }
 
-    private void OnEdgeReached()
+    private void OnEdgeReached(Vector2 direction)
     {
+        _directionX = direction;
         _isReached = true;
-        _directionX *= -1;
     }
 
+    public void TakeDamage()
+    {
+        Died?.Invoke(_killPoints, transform.position);
+        Destroy(gameObject);
+    }
 }

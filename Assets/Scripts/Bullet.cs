@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private LayerMask _target;
+    [SerializeField] private LayerMask _destroyer;
 
     private Rigidbody2D _rb;
 
@@ -25,11 +26,18 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
-        
         if ((1 << collision.gameObject.layer & _target) != 0)
         {
-            Destroy(collision.gameObject);
+            if (collision.gameObject.TryGetComponent(out IDamagable target))
+            {
+                target.TakeDamage();
+                Destroy(gameObject);
+            }
+        }
+
+        if ((1 << collision.gameObject.layer & _destroyer) != 0)
+        {
+            Destroy(gameObject);
         }
     }
 }

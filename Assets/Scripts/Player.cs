@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField] private int _health = 3;
     [SerializeField] private Bullet _bullet;
@@ -28,5 +28,15 @@ public class Player : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext context)
     {
         Instantiate(_bullet, _gunPoint.position, _gunPoint.rotation);
+    }
+
+    public void TakeDamage()
+    {
+        _health--;
+
+        if (_health == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

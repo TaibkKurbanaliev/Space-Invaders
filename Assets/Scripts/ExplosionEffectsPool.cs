@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class ExplosionEffectsPool : MonoBehaviour
 {
+    [SerializeField] private GameObject _particleSystem; 
     [SerializeField] private int _numberOfEffects;
-    [SerializeField] private ParticleSystem _particleSystem; 
 
-    private List<ParticleSystem> _particlesPool;
+    private List<GameObject> _particlesPool = new();
 
-    private void Awake()
+    private void Start()
     {
-        var particleSystem = Instantiate(_particleSystem);
-        particleSystem.Stop();
-        _particlesPool.Add(particleSystem);
+        for (int i = 0; i < _numberOfEffects; i++)
+        {
+            var particleSystem = Instantiate(_particleSystem);
+            particleSystem.GetComponent<ParticleSystem>().Stop();
+            _particlesPool.Add(particleSystem);
+        }
     }
 
     private void OnEnable()
@@ -29,8 +32,8 @@ public class ExplosionEffectsPool : MonoBehaviour
 
     private void OnEnemyDied(int _, Vector3 position)
     {
-        var system = _particlesPool.FirstOrDefault(system => system.isStopped);
+        var system = _particlesPool.FirstOrDefault(system => system.GetComponent<ParticleSystem>().isStopped);
         system.gameObject.transform.position = position;
-        system.Play();
+        system.GetComponent<ParticleSystem>().Play();
     }
 }

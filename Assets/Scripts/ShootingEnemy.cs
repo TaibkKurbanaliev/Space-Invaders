@@ -5,8 +5,8 @@ public class ShootingEnemy : Enemy
 {
     [SerializeField] private Bullet _bullet;
     [SerializeField] private Transform _gunPoint;
-    [SerializeField] private float _delay = 1f;
-
+    [SerializeField] private float _maxDelay = 4f;
+    [SerializeField] private float _minDelay = 2f;
 
     private void Start()
     {
@@ -27,8 +27,8 @@ public class ShootingEnemy : Enemy
     {
         while (true)
         {
+            yield return new WaitForSeconds(Random.Range(_minDelay,_maxDelay));
             Shoot();
-            yield return new WaitForSeconds(_delay);
         }
     }
 }

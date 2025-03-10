@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 156312351662861688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: -0.266, z: -0.02429998}
+  m_LocalPosition: {x: 0, y: -0.199, z: -0.02429998}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4692549765304251607}
   - component: {fileID: 2218721954728365854}
   - component: {fileID: 4678208288218523859}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 0.6666667}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 0.53333336}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 545115317558346277}
@@ -171,7 +171,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &2218721954728365854
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -233,9 +233,13 @@ MonoBehaviour:
   _speed: 1
   _killPoints: 100
   _stepDownOffset: 1
-  _wallMask:
+  _leftWall:
+    serializedVersion: 2
+    m_Bits: 2048
+  _rightWall:
     serializedVersion: 2
     m_Bits: 128
   _bullet: {fileID: 7029814528185766803, guid: 1488bdf29bb428f42a18c12b2c8b6671, type: 3}
   _gunPoint: {fileID: 545115317558346277}
-  _delay: 1
+  _maxDelay: 4
+  _minDelay: 2
