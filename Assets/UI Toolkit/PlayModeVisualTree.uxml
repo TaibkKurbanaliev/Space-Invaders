@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/PlayModeStyle.uss?fileID=7433441132597879392&amp;guid=b85ffe7cbf4cfb842a5ef38a414b07db&amp;type=3#PlayModeStyle" />
+    <engine:VisualElement name="Container" style="flex-grow: 1; color: rgb(255, 255, 255); background-image: url(&quot;project://database/Assets/Sprites/wallhaven-zmrmlw.jpg?fileID=2800000&amp;guid=2cfc49a95408bf946813073ffdb995d7&amp;type=3#wallhaven-zmrmlw&quot;); overflow: visible; visibility: visible;">
+        <engine:Label text="Label" class="header" style="-unity-text-align: upper-center;" />
+        <engine:Button text="Button" name="Button" class="button" style="background-image: url(&quot;project://database/Assets/Dark%20UI/Free/BTN_A2.png?fileID=2800000&amp;guid=0d6987b955d79574a92ef79c006ad418&amp;type=3#BTN_A2&quot;); background-color: rgba(0, 0, 0, 0.12); -unity-text-align: middle-center; color: rgb(255, 255, 255); font-size: 14px;" />
+        <engine:Button text="Button" class="button" style="background-image: url(&quot;project://database/Assets/Dark%20UI/Free/BTN_A2.png?fileID=21300000&amp;guid=0d6987b955d79574a92ef79c006ad418&amp;type=3#BTN_A2&quot;); background-color: rgba(0, 0, 0, 0.1);" />
+    </engine:VisualElement>
+</engine:UXML>
