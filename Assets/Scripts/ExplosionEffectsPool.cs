@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ExplosionEffectsPool : MonoBehaviour
 {
     [SerializeField] private GameObject _particleSystem; 
     [SerializeField] private int _numberOfEffects;
+    [SerializeField] private AudioClip _explosionSound;
 
+    private AudioSource _audioSource;
     private List<GameObject> _particlesPool = new();
 
     private void Start()
@@ -18,6 +21,8 @@ public class ExplosionEffectsPool : MonoBehaviour
             particleSystem.GetComponent<ParticleSystem>().Stop();
             _particlesPool.Add(particleSystem);
         }
+        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -35,5 +40,6 @@ public class ExplosionEffectsPool : MonoBehaviour
         var system = _particlesPool.FirstOrDefault(system => system.GetComponent<ParticleSystem>().isStopped);
         system.gameObject.transform.position = position;
         system.GetComponent<ParticleSystem>().Play();
+        _audioSource.PlayOneShot(_explosionSound);
     }
 }
