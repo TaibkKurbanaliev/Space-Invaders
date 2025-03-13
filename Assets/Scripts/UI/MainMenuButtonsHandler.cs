@@ -17,7 +17,7 @@ public class MainMenuButtonsHandler : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        SceneLoader.Instance.LoadScene("Game");
     }
 
     public void Quit()
