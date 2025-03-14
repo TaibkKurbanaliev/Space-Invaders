@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour, IDamagable
@@ -11,6 +13,8 @@ public class Player : MonoBehaviour, IDamagable
 
     private AudioSource _audioSource;
     private InputSystem_Actions _actions;
+
+    public event Action<int> TakeDamaged;
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class Player : MonoBehaviour, IDamagable
     public void TakeDamage()
     {
         _health--;
+        TakeDamaged?.Invoke(_health);
 
         if (_health == 0)
         {

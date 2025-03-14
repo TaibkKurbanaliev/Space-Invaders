@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
-  _killPoints: 100
+  _killPoints: 300
   _stepDownOffset: 1
   _leftWall:
     serializedVersion: 2
